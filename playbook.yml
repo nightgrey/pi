@@ -1,0 +1,46 @@
+---
+- name: Install Docker
+  hosts: pi
+  remote_user: ansible
+  become: yes
+  tasks:
+    - name: Set system architecture
+      ansible.builtin.command:
+        cmd: "dpkg --print-architecture"
+      register: arch
+
+    - name: Set OS codename
+      shell: ". /etc/os-release && echo $VERSION_CODENAME"
+      register: codename
+
+    - name: Update package list and install dependencies
+      ansible.builtin.apt:
+        update_cache: yes
+        name: ["ca-certificates", "curl", "gnupg"]
+        state: present
+
+    # I have not used the official ansible module because it does not support the keyring option, at least AFAIK.
+    # https://docs.docker.com/engine/install/debian/
+    - name: Add keyring folder
+      ansible.builtin.file:
+        path: "/etc/apt/keyrings"
+        state: directory
+        mode: "0755"
+
+    # I have not used the official ansible module because it does not support the keyring option, at least AFAIK.
+    # https://docs.docker.com/engine/install/debian/
+    - name: Add official GPG key
+      shell: "rm /etc/apt/keyrings/docker.gpg; curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg"
+
+    - name: Add repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch={{ arch.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian {{ codename.stdout }} stable"
+        state: present
+        update_cache: yes
+        filename: "docker"
+
+    - name: Install packages
+      ansible.builtin.apt:
+        update_cache: yes
+        name: ["docker-ce", "docker-ce-cli", "containerd.io", "docker-buildx-plugin", "docker-compose-plugin"]
+        state: present
