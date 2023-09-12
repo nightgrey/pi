@@ -32,15 +32,9 @@
       repo: "deb [arch={{ arch.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian {{ codename.stdout }} stable"
       state: present
       update_cache: yes
-      filename:     - name: Set system architecture
-    ansible.builtin.command:
-      cmd: "dpkg --print-architecture"
-    register: arch
+      filename: "docker"
 
-  - name: Set OS codename
-    shell: ". /etc/os-release && echo $VERSION_CODENAME"
-    register: codename
-ll packages
+  - name: Install packages
     ansible.builtin.apt:
       update_cache: yes
       name: ["docker-ce", "docker-ce-cli", "containerd.io", "docker-buildx-plugin", "docker-compose-plugin"]

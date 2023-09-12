@@ -1,7 +1,7 @@
 ANSIBLE=ansible -i inventory.yml
 ANSIBLE_PLAYBOOK=ansible-playbook -i inventory.yml
 
-playbook: # Run playbook
+run: # Run playbook
 	$(ANSIBLE_PLAYBOOK) playbook.yml --verbose
 
 check: # Run playbook in check mode

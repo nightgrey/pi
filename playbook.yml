@@ -5,4 +5,9 @@
     - name: Install docker
       become: yes
       ansible.builtin.import_tasks:
-        file:  tasks/docker.yml
+        file: tasks/docker.yml
+
+    - name: Install Portainer
+      become: yes
+      ansible.builtin.import_tasks:
+        file: tasks/portainer.yml
