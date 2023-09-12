@@ -14,7 +14,7 @@ The main purpose for this repository is some fun, learning experience and practi
 
 Run the actual playbook with:
 ```bash
-$ make playbook
+$ make run
 ```
 
 Run a check with:
