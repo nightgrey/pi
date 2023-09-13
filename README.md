@@ -8,7 +8,7 @@ The main purpose for this repository is some fun, learning experience and practi
 - A Raspberry Pi with Raspbian installed
 - Ansible installed on your local machine
 - SSH access to the Raspberry Pi
-- Edit `inventory.yml` and replace `pi` with the host name or IP address of your Pi.
+- Edit `inventory.yml` and replace the value of `ansible_host: pi.fritz.box` with the host name or IP address of your Pi.
 
 ## Usage
 

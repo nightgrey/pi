@@ -1,4 +1,5 @@
 ungrouped:
   hosts:
     pi:
+      ansible_host: pi.fritz.box
       ansible_user: ansible
